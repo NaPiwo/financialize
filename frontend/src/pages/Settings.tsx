@@ -112,9 +112,18 @@ export function Settings() {
     ]
     const [customCurrency, setCustomCurrency] = useState('')
 
-    const handleReset = () => {
-        if (confirm("Are you sure? This will wipe all your data and return to defaults.")) {
+    const handleReset = async () => {
+        if (confirm("Are you sure? This will wipe ALL your data (browser + database) and return to the setup wizard.")) {
+            // Wipe backend database
+            try {
+                await apiClient.delete('/tracker/reset-all')
+            } catch {
+                // Backend may be down — still reset client side
+            }
+            // Wipe client-side state (also clears onboarding flag)
             resetData()
+            // Force reload to re-trigger the onboarding wizard
+            window.location.reload()
         }
     }
 
@@ -425,8 +434,8 @@ export function Settings() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                         <p className="text-sm text-muted-foreground">
-                            This application stores your data locally in your browser.
-                            Clicking the button below will wipe all your income, expenses, and settings returning the app to its factory state.
+                            This will wipe everything — browser data, database accounts, balance history, saved scenarios, and household members.
+                            The app will restart with the setup wizard as if it were a fresh install.
                         </p>
                         <Button variant="destructive" onClick={handleReset} className="w-full sm:w-auto">
                             <Trash2 className="mr-2 h-4 w-4" /> Reset All Data

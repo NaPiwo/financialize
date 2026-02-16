@@ -190,31 +190,35 @@ export const useFinancialStore = create<FinancialState>()(
                 }
             },
 
-            resetData: () => set(() => ({
-                incomes: [],
-                expenses: [],
-                currency: '$',
-                theme: 'light' as const,
-                showCoach: true,
-                actualExpenses: {},
-                exchangeRates: {},
-                simulationParams: {
-                    annualRaise: 2.0,
-                    marketReturn: 7.0,
-                    inflation: 2.5,
-                    years: 10,
-                    currentSavings: 0,
-                    currentAge: 30
-                },
-                planningTargets: {
-                    targetNetWorth: 1000000,
-                    targetYears: 20
-                },
-                events: [],
-                persons: [],
-                accounts: [],
-                history: []
-            })),
+            resetData: () => {
+                // Clear the onboarding flag so the wizard re-triggers on next load
+                localStorage.removeItem('financialize-onboarded')
+                set(() => ({
+                    incomes: [],
+                    expenses: [],
+                    currency: '$',
+                    theme: 'light' as const,
+                    showCoach: true,
+                    actualExpenses: {},
+                    exchangeRates: {},
+                    simulationParams: {
+                        annualRaise: 2.0,
+                        marketReturn: 7.0,
+                        inflation: 2.5,
+                        years: 10,
+                        currentSavings: 0,
+                        currentAge: 30
+                    },
+                    planningTargets: {
+                        targetNetWorth: 1000000,
+                        targetYears: 20
+                    },
+                    events: [],
+                    persons: [],
+                    accounts: [],
+                    history: []
+                }))
+            },
 
             addEvent: (event) => set((state) => ({
                 events: [...state.events, event]
@@ -369,7 +373,8 @@ export const useFinancialStore = create<FinancialState>()(
                 theme: state.theme,
                 showCoach: state.showCoach,
                 actualExpenses: state.actualExpenses,
-                exchangeRates: state.exchangeRates
+                exchangeRates: state.exchangeRates,
+                events: state.events,
             }),
         }
     )

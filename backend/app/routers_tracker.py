@@ -148,3 +148,15 @@ def delete_entry(entry_id: int, db: Session = Depends(get_db)):
     db.delete(entry)
     db.commit()
     return {"ok": True}
+
+@router.delete("/reset-all")
+def reset_all_data(db: Session = Depends(get_db)):
+    """Wipe all user data from the database (factory reset)."""
+    db.query(models.BalanceEntry).delete()
+    db.query(models.Account).delete()
+    db.query(models.Person).delete()
+    db.query(models.IncomeItem).delete()
+    db.query(models.ExpenseItem).delete()
+    db.query(models.UserScenario).delete()
+    db.commit()
+    return {"ok": True}
