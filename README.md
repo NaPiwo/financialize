@@ -26,20 +26,31 @@ A personal finance playground that makes financial planning visual, interactive,
 
 ## Getting Started
 
-# Building a Distributable
+### Building a Distributable
 
-Package everything into a single `.exe` that anyone can run — no Python or Node.js required:
+Package everything into a single executable that anyone can run — no Python or Node.js required.
 
+**Windows:**
 ```bash
 cd backend
+python -m venv venv
 .\venv\Scripts\Activate
-pip install pyinstaller
-
+pip install -r requirements.txt
 cd ..
 python build.py
 ```
-
 Output: `release/Financialize.exe` — double-click to launch.
+
+**macOS / Linux:**
+```bash
+cd backend
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cd ..
+python build.py
+```
+Output: `release/Financialize` — run with `./Financialize` from Terminal.
 
 See [`The Idea/Tech.md`](The%20Idea/Tech.md) for full technical documentation.
 

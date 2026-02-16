@@ -32,7 +32,6 @@ export function OnboardingWizard({ onComplete }: { onComplete: () => void }) {
     const [personAge, setPersonAge] = useState('')
 
     const addIncome = useFinancialStore(s => s.addIncome)
-    const setExpenseAllocations = useFinancialStore(s => s.setExpenseAllocations)
     const setCurrency = useFinancialStore(s => s.setCurrency)
     const createPerson = useFinancialStore(s => s.createPerson)
     const currency = useFinancialStore(s => s.currency)
@@ -51,14 +50,21 @@ export function OnboardingWizard({ onComplete }: { onComplete: () => void }) {
             await createPerson(p.name, p.age ? parseInt(p.age) : undefined, p.color)
         }
 
-        // Clear defaults and set user's choices
-        useFinancialStore.setState({ incomes: [] })
-        addIncome(incomeName, parseFloat(incomeAmount) || 0)
+        const remaining = Math.max(0, 100 - housingPct - savingsPct)
+        const otherPct = Math.round(remaining / 3)
 
-        setExpenseAllocations([
-            { id: 'house', percentage: housingPct },
-            { id: 'savings', percentage: savingsPct },
-        ])
+        // Set up income + default expense categories with the user's chosen allocations
+        useFinancialStore.setState({
+            incomes: [],
+            expenses: [
+                { id: 'house', name: 'Housing', amount: 0, percentage: housingPct, isFixed: true },
+                { id: 'food', name: 'Food & Dining', amount: 0, percentage: otherPct, isFixed: false },
+                { id: 'transport', name: 'Transportation', amount: 0, percentage: otherPct, isFixed: false },
+                { id: 'savings', name: 'Savings/Investments', amount: 0, percentage: savingsPct, isFixed: false },
+                { id: 'lifestyle', name: 'Lifestyle', amount: 0, percentage: Math.max(0, remaining - otherPct * 2), isFixed: false },
+            ],
+        })
+        addIncome(incomeName, parseFloat(incomeAmount) || 0)
 
         onComplete()
     }
