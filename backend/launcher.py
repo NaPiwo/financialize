@@ -12,6 +12,10 @@ import webbrowser
 import threading
 import uvicorn
 
+# Import the FastAPI app object directly so PyInstaller can trace
+# the full dependency tree (fastapi, sqlalchemy, pydantic, etc.)
+from app.main import app as fastapi_app
+
 
 def find_free_port(start: int = 8000, end: int = 8100) -> int:
     """Find an available TCP port in the given range."""
@@ -40,8 +44,9 @@ def main():
     threading.Thread(target=open_browser, args=(port,), daemon=True).start()
 
     # Start the server (this blocks until shutdown)
+    # Pass the app object directly instead of a string import path
     uvicorn.run(
-        "app.main:app",
+        fastapi_app,
         host="127.0.0.1",
         port=port,
         log_level="warning",

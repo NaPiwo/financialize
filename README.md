@@ -26,6 +26,23 @@ A personal finance playground that makes financial planning visual, interactive,
 
 ## Getting Started
 
+# Building a Distributable
+
+Package everything into a single `.exe` that anyone can run — no Python or Node.js required:
+
+```bash
+cd backend
+.\venv\Scripts\Activate
+pip install pyinstaller
+
+cd ..
+python build.py
+```
+
+Output: `release/Financialize.exe` — double-click to launch.
+
+See [`The Idea/Tech.md`](The%20Idea/Tech.md) for full technical documentation.
+
 ### Prerequisites
 
 - **Python 3.11+**
@@ -89,22 +106,6 @@ financialize/
 └── The Idea/          # Design docs (Vision, Tech, Current Situation)
 ```
 
-## Building a Distributable
-
-Package everything into a single `.exe` that anyone can run — no Python or Node.js required:
-
-```bash
-cd backend
-.\venv\Scripts\Activate
-pip install pyinstaller
-
-cd ..
-python build.py
-```
-
-Output: `release/Financialize.exe` — double-click to launch.
-
-See [`The Idea/Tech.md`](The%20Idea/Tech.md) for full technical documentation.
 
 ## License
 

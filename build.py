@@ -70,11 +70,9 @@ def main():
         "--onefile",
         "--console",  # keep console so user can see status; use --noconsole to hide
         "--icon", "NONE",
-        # Bundle the entire frontend dist folder
+        # Bundle the entire frontend dist folder as data
         "--add-data", f"{frontend_dist};frontend/dist",
-        # Bundle the backend app package
-        "--add-data", f"{BACKEND / 'app'};app",
-        # Hidden imports that PyInstaller may miss
+        # --- Uvicorn internals (not auto-detected) ---
         "--hidden-import", "uvicorn.logging",
         "--hidden-import", "uvicorn.loops",
         "--hidden-import", "uvicorn.loops.auto",
@@ -86,7 +84,29 @@ def main():
         "--hidden-import", "uvicorn.lifespan",
         "--hidden-import", "uvicorn.lifespan.on",
         "--hidden-import", "uvicorn.lifespan.off",
+        # --- FastAPI / Starlette ---
+        "--hidden-import", "fastapi",
+        "--hidden-import", "fastapi.routing",
+        "--hidden-import", "fastapi.middleware",
+        "--hidden-import", "fastapi.middleware.cors",
+        "--hidden-import", "starlette",
+        "--hidden-import", "starlette.routing",
+        "--hidden-import", "starlette.middleware",
+        "--hidden-import", "starlette.middleware.cors",
+        "--hidden-import", "starlette.responses",
+        "--hidden-import", "starlette.staticfiles",
+        "--hidden-import", "starlette.templating",
+        "--hidden-import", "anyio._backends._asyncio",
+        # --- Pydantic ---
+        "--hidden-import", "pydantic",
+        "--hidden-import", "pydantic.deprecated.decorator",
+        # --- SQLAlchemy ---
+        "--hidden-import", "sqlalchemy",
         "--hidden-import", "sqlalchemy.dialects.sqlite",
+        # --- Data libs ---
+        "--hidden-import", "numpy",
+        "--hidden-import", "pandas",
+        # --- App modules (traced via direct import, but be explicit) ---
         "--hidden-import", "app.main",
         "--hidden-import", "app.database",
         "--hidden-import", "app.models",
@@ -95,6 +115,11 @@ def main():
         "--hidden-import", "app.routers",
         "--hidden-import", "app.routers_tracker",
         "--hidden-import", "app.routers_scenarios",
+        # --- Collect all submodules for packages PyInstaller struggles with ---
+        "--collect-submodules", "uvicorn",
+        "--collect-submodules", "fastapi",
+        "--collect-submodules", "starlette",
+        "--collect-submodules", "pydantic",
         str(BACKEND / "launcher.py"),
     ]
 
