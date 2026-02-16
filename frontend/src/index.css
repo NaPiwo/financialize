@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Base Colors - Soft Pastel Tones */
+    --background: 45 29% 97%;
+    /* #FAF9F6 - Off white/Cream */
+    --foreground: 222.2 84% 4.9%;
+    /* Sharp Black/Dark Blue */
+
+    /* Card - White with a slight tint */
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    /* Popover */
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    /* Primary - Distinct, slightly softened Emerald/Mint */
+    --primary: 158 45% 45%;
+    --primary-foreground: 210 40% 98%;
+
+    /* Secondary - Soft Lavender/Periwinkle */
+    --secondary: 240 60% 94%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    /* Muted */
+    --muted: 210 40% 90%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    /* Accent - Soft Mint for hover states */
+    --accent: 158 50% 95%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    /* Destructive - Soft Coral/Rose */
+    --destructive: 0 70% 65%;
+    --destructive-foreground: 210 40% 98%;
+
+    /* Border - Sharp Black for Neo-Brutalism contrast */
+    --border: 0 0% 0%;
+    /* Pure Black */
+    --input: 0 0% 0%;
+    --ring: 222.2 84% 4.9%;
+
+    /* Neo-Brutalism Radius */
+    --radius: 1rem;
+    /* 16px - High roundness */
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    /* ... keeping dark mode standard for now, focusing on light mode first */
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .transition-value {
+    transition: color 200ms ease, transform 150ms ease;
+  }
+}

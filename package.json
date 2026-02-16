@@ -1,0 +1,14 @@
+{
+    "name": "financialize-root",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "npm run dev --prefix frontend",
+        "build": "npm run build --prefix frontend",
+        "backend": "cd backend && .\\venv\\Scripts\\Activate && uvicorn app.main:app --reload",
+        "start": "concurrently \"npm run backend\" \"npm run dev\""
+    },
+    "devDependencies": {
+        "concurrently": "^8.2.0"
+    }
+}
